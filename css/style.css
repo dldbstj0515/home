@@ -1,18 +1,20 @@
 :root {
-  --bg: #F0F0F0;
+  --bg: #F3F6FF;
   --sf: #fff;
-  --tx: #222222;
-  --mu: #707070;
-  --ln: #CFCFCF;
-  --pri: #3D3D3D;
-  --pb: #E4E4E4;
+  --tx: #172033;
+  --mu: #5B677A;
+  --ln: #E1E7F0;
+  --pri: #2F5BFF;
+  --pb: #E8EEFF;
   --on: #fff;
-  --ok: #2B2B2B;
-  --okb: #E0E0E0;
-  --wn: #5E5E5E;
-  --wnb: #E9E9E9;
-  --bd: #7A7A7A;
-  --bdb: #EEEEEE;
+  --ac: #FF7A59;
+  --acb: #FFEDE6;
+  --ok: #0E7A55;
+  --okb: #DFF4EA;
+  --wn: #946000;
+  --wnb: #FFF0D1;
+  --bd: #D6303C;
+  --bdb: #FFE8EA;
   --fd: 'Jua', 'Noto Sans KR', system-ui, sans-serif;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -21,38 +23,42 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #151515;
-    --sf: #202020;
-    --tx: #EEEEEE;
-    --mu: #A0A0A0;
-    --ln: #3A3A3A;
-    --pri: #D0D0D0;
-    --pb: #2E2E2E;
-    --on: #151515;
-    --ok: #E0E0E0;
-    --okb: #2E2E2E;
-    --wn: #B5B5B5;
-    --wnb: #2A2A2A;
-    --bd: #9A9A9A;
-    --bdb: #262626;
+    --bg: #0E131B;
+    --sf: #171E29;
+    --tx: #EAF0F8;
+    --mu: #9AA7BB;
+    --ln: #27313F;
+    --pri: #86A0FF;
+    --pb: #1E2A4F;
+    --on: #0E131B;
+    --ac: #FF9A7E;
+    --acb: #3A2219;
+    --ok: #4FD6A0;
+    --okb: #11322A;
+    --wn: #F2B84B;
+    --wnb: #392D10;
+    --bd: #FF8F95;
+    --bdb: #3B1B1E;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #151515;
-  --sf: #202020;
-  --tx: #EEEEEE;
-  --mu: #A0A0A0;
-  --ln: #3A3A3A;
-  --pri: #D0D0D0;
-  --pb: #2E2E2E;
-  --on: #151515;
-  --ok: #E0E0E0;
-  --okb: #2E2E2E;
-  --wn: #B5B5B5;
-  --wnb: #2A2A2A;
-  --bd: #9A9A9A;
-  --bdb: #262626;
+  --bg: #0E131B;
+  --sf: #171E29;
+  --tx: #EAF0F8;
+  --mu: #9AA7BB;
+  --ln: #27313F;
+  --pri: #86A0FF;
+  --pb: #1E2A4F;
+  --on: #0E131B;
+  --ac: #FF9A7E;
+  --acb: #3A2219;
+  --ok: #4FD6A0;
+  --okb: #11322A;
+  --wn: #F2B84B;
+  --wnb: #392D10;
+  --bd: #FF8F95;
+  --bdb: #3B1B1E;
 }
 
 html {
@@ -194,7 +200,7 @@ h2 {
   cursor: pointer;
   min-height: 54px;
   font-size: 15px;
-  box-shadow: none;
+  box-shadow: 0 4px 14px rgba(47, 91, 255, .28);
 }
 
 .btn.inv {
@@ -895,19 +901,30 @@ nav button.on svg {
 .cmp-cell.ok b{color:var(--tx)}
 .cmp-cell .chip{padding:5px 10px;font-size:12px}
 
-/* ===== 그레이톤 와이어프레임 ===== */
-.card,.feat,.tile,.cl,.chip{border-width:1.5px}
-.ic{border:1.5px dashed #9A9A9A}
-.mark{border:1.5px solid var(--tx)}
-.btn{border:1.5px solid var(--pri)}
-.btn.inv{border-color:var(--on)}
-.rate b,.tr.up,.tr.dn{color:var(--tx)}
-.err{color:var(--tx);font-weight:700}
-.live{border:1px solid var(--ln)}
-.hbtn{border:1.5px solid var(--tx);background:var(--sf);color:var(--tx);border-radius:20px;padding:7px 14px;font:700 13px inherit;font-family:inherit;white-space:nowrap;cursor:pointer}
+/* ===== 폰트 · 컬러 ===== */
+.btn,.hbtn,.chip,.pill,.sec,.live,nav button,.cp b,.feat b{font-family:'Jua','Noto Sans KR',system-ui,sans-serif;font-weight:400;letter-spacing:0}
+.btn{font-size:16px}
+.chip{font-size:14px}
+.pill{font-size:12px}
+nav button{font-size:12px}
+.sec{font-size:16px}
+.cp b{font-size:15px}
+.hbtn{background:var(--pri);color:var(--on);border:0;border-radius:20px;padding:9px 16px;font-size:14px;white-space:nowrap;cursor:pointer;box-shadow:0 3px 10px rgba(47,91,255,.28)}
 .home-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
 .home-head h1{margin:0}
+header .hbtn{background:var(--pb);color:var(--pri);box-shadow:none;padding:7px 14px;font-size:13px}
 .acct{display:flex;align-items:center;gap:12px}
+.rk.top{color:var(--ac)}
+.rate b{color:var(--ac);font-family:'Jua','Noto Sans KR',sans-serif;font-weight:400;font-size:14px}
+.tr.up{color:var(--bd)}
+.tr.dn{color:var(--pri)}
+.ic{background:var(--pb);color:var(--pri)}
+.pop-row:nth-child(3n+2) .ic,.case:nth-of-type(3n+2) .ic{background:var(--acb);color:var(--ac)}
+.pop-row:nth-child(3n) .ic,.case:nth-of-type(3n) .ic{background:var(--okb);color:var(--ok)}
 .favbtn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--ln);background:var(--sf);color:var(--mu);display:grid;place-items:center;flex:none;cursor:pointer;padding:0}
-.favbtn.on{background:var(--pri);border-color:var(--pri);color:var(--on)}
+.favbtn.on{background:var(--ac);border-color:var(--ac);color:#fff}
 .favbtn.on svg{fill:currentColor}
+.stat.hl{background:var(--acb);color:var(--ac)}
+.stat.hl b{color:var(--ac)}
+.live{background:var(--acb);color:var(--ac)}
+.live i{background:var(--ac)}
