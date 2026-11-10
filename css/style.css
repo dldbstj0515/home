@@ -1,18 +1,18 @@
 :root {
-  --bg: #F2F5FA;
+  --bg: #F0F0F0;
   --sf: #fff;
-  --tx: #162033;
-  --mu: #5B677A;
-  --ln: #E1E7F0;
-  --pri: #2457E6;
-  --pb: #E6EDFF;
+  --tx: #222222;
+  --mu: #707070;
+  --ln: #CFCFCF;
+  --pri: #3D3D3D;
+  --pb: #E4E4E4;
   --on: #fff;
-  --ok: #0E7A55;
-  --okb: #DFF4EA;
-  --wn: #946000;
-  --wnb: #FFF0D1;
-  --bd: #BE2530;
-  --bdb: #FCE6E7;
+  --ok: #2B2B2B;
+  --okb: #E0E0E0;
+  --wn: #5E5E5E;
+  --wnb: #E9E9E9;
+  --bd: #7A7A7A;
+  --bdb: #EEEEEE;
   --fd: 'Jua', 'Noto Sans KR', system-ui, sans-serif;
   box-sizing: border-box;
   padding-top: env(safe-area-inset-top, 0px);
@@ -21,38 +21,38 @@
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --bg: #0E131B;
-    --sf: #171E29;
-    --tx: #EAF0F8;
-    --mu: #9AA7BB;
-    --ln: #27313F;
-    --pri: #7F9EFF;
-    --pb: #1E2A4F;
-    --on: #0E131B;
-    --ok: #4FD6A0;
-    --okb: #11322A;
-    --wn: #F2B84B;
-    --wnb: #392D10;
-    --bd: #FF8F95;
-    --bdb: #3B1B1E;
+    --bg: #151515;
+    --sf: #202020;
+    --tx: #EEEEEE;
+    --mu: #A0A0A0;
+    --ln: #3A3A3A;
+    --pri: #D0D0D0;
+    --pb: #2E2E2E;
+    --on: #151515;
+    --ok: #E0E0E0;
+    --okb: #2E2E2E;
+    --wn: #B5B5B5;
+    --wnb: #2A2A2A;
+    --bd: #9A9A9A;
+    --bdb: #262626;
   }
 }
 
 :root[data-theme="dark"] {
-  --bg: #0E131B;
-  --sf: #171E29;
-  --tx: #EAF0F8;
-  --mu: #9AA7BB;
-  --ln: #27313F;
-  --pri: #7F9EFF;
-  --pb: #1E2A4F;
-  --on: #0E131B;
-  --ok: #4FD6A0;
-  --okb: #11322A;
-  --wn: #F2B84B;
-  --wnb: #392D10;
-  --bd: #FF8F95;
-  --bdb: #3B1B1E;
+  --bg: #151515;
+  --sf: #202020;
+  --tx: #EEEEEE;
+  --mu: #A0A0A0;
+  --ln: #3A3A3A;
+  --pri: #D0D0D0;
+  --pb: #2E2E2E;
+  --on: #151515;
+  --ok: #E0E0E0;
+  --okb: #2E2E2E;
+  --wn: #B5B5B5;
+  --wnb: #2A2A2A;
+  --bd: #9A9A9A;
+  --bdb: #262626;
 }
 
 html {
@@ -194,7 +194,7 @@ h2 {
   cursor: pointer;
   min-height: 54px;
   font-size: 15px;
-  box-shadow: 0 4px 14px rgba(36, 87, 230, .3);
+  box-shadow: none;
 }
 
 .btn.inv {
@@ -796,3 +796,118 @@ nav button.on svg {
     transition: none !important;
   }
 }
+
+/* 단계별 로드맵 및 진행 피드백 */
+.progress-meta{display:flex;justify-content:space-between;color:var(--mu);font-size:11px;margin-top:8px}
+.sec{font-size:13px;font-weight:800;margin:18px 2px 8px}
+.focus-card{border:1.5px solid var(--pri)}
+.focus-title{font-size:21px;margin:2px 0 0}
+.smallbar{height:6px;margin:10px 0 14px}
+.subtask{display:flex;align-items:flex-start;gap:11px;padding:12px 2px;border-bottom:1px solid var(--ln);cursor:pointer}
+.subtask:last-of-type{border-bottom:0}
+.subtask input{width:19px;height:19px;accent-color:var(--pri);margin:2px 0 0;flex:none}
+.subtask span{display:flex;flex-direction:column;gap:2px}
+.subtask b{font-size:13px}
+.subtask small{font-size:11px;color:var(--mu);line-height:1.45}
+.subtask.done b{text-decoration:line-through;color:var(--mu)}
+.feedback-btn{margin-top:14px;box-shadow:none}
+.feedback-box{background:var(--pb);border:1px solid var(--ln);border-radius:12px;padding:13px;margin-top:12px;color:var(--tx)}
+.feedback-box b{display:flex;align-items:center;gap:6px;font-size:13px}
+.feedback-box b svg{width:17px;height:17px;color:var(--pri)}
+.feedback-box p{font-size:12px;line-height:1.65;margin:7px 0 0}
+.hint{font-size:11px;color:var(--mu);text-align:center;margin:9px 0 0}
+.nav-task{margin-top:14px}
+.nav-task .btn{min-height:46px;padding:10px;font-size:13px}
+.task-list{padding:4px 14px}
+.task-overview{display:flex;align-items:center;gap:11px;width:100%;padding:13px 0;border:0;border-bottom:1px solid var(--ln);background:none;color:var(--tx);text-align:left;font:inherit;cursor:pointer}
+.task-overview:last-child{border-bottom:0}
+.task-overview.selected{background:var(--pb);margin:0 -6px;padding:13px 6px;width:calc(100% + 12px);border-radius:10px}
+.task-number{width:27px;height:27px;display:grid;place-items:center;border:1px solid var(--ln);border-radius:50%;font-size:12px;flex:none}
+.task-number svg{width:15px;height:15px}
+.task-overview .cp{flex:1;min-width:0}
+.task-overview .cp b{font-size:13px}
+.task-overview .cp small{display:block;color:var(--mu);font-size:10px;margin-top:2px}
+.task-overview>svg{width:17px;height:17px;color:var(--mu)}
+.mini-track{height:4px;background:var(--bg);border-radius:8px;display:block;margin-top:7px;overflow:hidden}
+.mini-track i{height:100%;display:block;background:var(--pri);border-radius:8px}
+
+/* 사용자 직접 작성형 로드맵 */
+.f textarea{width:100%;min-height:105px;border:1px solid var(--ln);border-radius:12px;background:var(--bg);color:var(--tx);padding:12px;font:inherit;line-height:1.6;resize:vertical}
+.job-cats{margin:12px 0 4px}
+.road-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.writing-card{margin-top:12px}
+.feedback-btn{margin-top:4px}
+.feedback-box{background:var(--pb);border:1px solid var(--ln);border-radius:12px;padding:14px;margin-top:14px;line-height:1.7;font-size:13px;white-space:normal}
+.feedback-box p{margin:8px 0 0;line-height:1.75}
+.add-entry{margin:4px 0 14px}
+
+/* ===== 홈 기능 소개 · 실시간 인기 · 경쟁률 · 로드맵 공유 ===== */
+.feats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 18px}
+.feat{background:var(--sf);border:1.5px solid var(--ln);border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:6px}
+.feat .ic{width:40px;height:40px;margin-bottom:2px}
+.feat b{font-family:var(--fd);font-weight:400;font-size:16px}
+.feat small{color:var(--mu);font-size:12px;line-height:1.45}
+.live{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:800;color:var(--bd);background:var(--bdb);border-radius:20px;padding:3px 9px}
+.live i{width:7px;height:7px;border-radius:50%;background:var(--bd);animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{50%{opacity:.25}}
+@media (prefers-reduced-motion: reduce){.live i{animation:none}}
+.pop-box{max-height:330px;overflow-y:auto;overscroll-behavior:contain;border-top:1px solid var(--ln);padding-right:2px}
+.pop-box .row:last-child{border-bottom:0}
+.rk{width:20px;flex:none;text-align:center;font-family:var(--fd);font-size:16px;color:var(--mu)}
+.rk.top{color:var(--pri)}
+.pv{display:flex;flex-direction:column;align-items:flex-end;gap:1px;flex:none}
+.pv b{font-size:13px}
+.tr{display:inline-flex;align-items:center;font-size:11px;font-weight:700;color:var(--mu)}
+.tr svg{width:12px;height:12px;stroke-width:3}
+.tr.up{color:var(--bd)}
+.tr.dn{color:var(--pri)}
+.rate{display:flex;flex-direction:column;align-items:flex-end;flex:none}
+.rate small{font-size:10px;color:var(--mu)}
+.rate b{font-size:13px;color:var(--bd);white-space:nowrap}
+.cp b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.case .row.nohov{cursor:default;border-bottom:0;padding-top:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:2px 0 12px}
+.stat{background:var(--bg);border-radius:12px;padding:10px 4px;display:flex;flex-direction:column;align-items:center;gap:1px;color:var(--mu)}
+.stat svg{width:16px;height:16px}
+.stat b{font-size:14px;color:var(--tx)}
+.stat small{font-size:11px}
+.stat.hl{background:var(--pb);color:var(--pri)}
+.stat.hl b{color:var(--pri)}
+.btn.sm{min-height:44px;padding:10px;font-size:13px}
+.tl{list-style:none;margin:6px 0 16px;padding:0}
+.tl li{position:relative;padding:0 0 16px 26px}
+.tl li::before{content:"";position:absolute;left:6px;top:16px;bottom:-2px;width:2px;background:var(--ln)}
+.tl li:last-child{padding-bottom:0}
+.tl li:last-child::before{display:none}
+.tl .dot{position:absolute;left:0;top:3px;width:14px;height:14px;border-radius:50%;background:var(--pri);border:3px solid var(--pb)}
+.tl small{color:var(--pri);font-weight:700;font-size:11px;display:block}
+.tl b{font-size:14px;display:block}
+.tl p{margin:2px 0 0;color:var(--mu);font-size:12px;line-height:1.5}
+.cmp-head,.cmp-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cmp-head{padding-bottom:8px;border-bottom:1px solid var(--ln);font-size:12px;color:var(--mu)}
+.cmp-row{padding:11px 0;border-bottom:1px solid var(--ln)}
+.cmp-row:last-child{border-bottom:0;padding-bottom:0}
+.cmp-cell{display:flex;flex-direction:column;gap:3px;align-items:flex-start;min-width:0}
+.cmp-cell small{color:var(--mu);font-size:11px}
+.cmp-cell b{font-size:13px}
+.cmp-cell.ok{color:var(--ok)}
+.cmp-cell.ok svg{width:16px;height:16px;stroke-width:2.6}
+.cmp-cell.ok b{color:var(--tx)}
+.cmp-cell .chip{padding:5px 10px;font-size:12px}
+
+/* ===== 그레이톤 와이어프레임 ===== */
+.card,.feat,.tile,.cl,.chip{border-width:1.5px}
+.ic{border:1.5px dashed #9A9A9A}
+.mark{border:1.5px solid var(--tx)}
+.btn{border:1.5px solid var(--pri)}
+.btn.inv{border-color:var(--on)}
+.rate b,.tr.up,.tr.dn{color:var(--tx)}
+.err{color:var(--tx);font-weight:700}
+.live{border:1px solid var(--ln)}
+.hbtn{border:1.5px solid var(--tx);background:var(--sf);color:var(--tx);border-radius:20px;padding:7px 14px;font:700 13px inherit;font-family:inherit;white-space:nowrap;cursor:pointer}
+.home-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.home-head h1{margin:0}
+.acct{display:flex;align-items:center;gap:12px}
+.favbtn{width:36px;height:36px;border-radius:50%;border:1.5px solid var(--ln);background:var(--sf);color:var(--mu);display:grid;place-items:center;flex:none;cursor:pointer;padding:0}
+.favbtn.on{background:var(--pri);border-color:var(--pri);color:var(--on)}
+.favbtn.on svg{fill:currentColor}
