@@ -144,7 +144,7 @@ ${list.length ? `<div class="sec">내가 만든 로드맵 ${list.length}개</div
     return `<div class="road-head"><button class="chip" onclick="S.activeRoadmap=null;S.feedback='';render()">← 내 로드맵 목록</button><button class="chip" onclick="deleteRoadmap('${selected.id}')">삭제</button></div><h1>${esc(selected.name)}</h1><p class="sub">${esc(selected.cat)} · ${esc(selected.goal)}</p>
 <div class="card"><h2>목표와 방향</h2><div class="f"><label>이 로드맵으로 이루고 싶은 목표</label><textarea id="roadPurpose" rows="3" placeholder="예: 졸업 전까지 서비스 기획 직무에 지원할 수 있는 포트폴리오를 완성하고 싶다.">${esc(selected.purpose||'')}</textarea></div><div class="f"><label>현재 나의 상황과 고민</label><textarea id="roadNow" rows="3" placeholder="현재 가진 경험, 부족하다고 느끼는 점, 고민 등을 자유롭게 작성하세요.">${esc(selected.now||'')}</textarea></div><button class="btn ghost" onclick="saveRoadIntro('${selected.id}')">목표와 상황 저장</button></div>
 <div class="sec">직접 정한 준비 주제</div><p class="sub">체크리스트 대신, 준비하고 싶은 주제와 본인의 생각·계획을 직접 작성하세요.</p>
-${selected.entries.map((e,i)=>`<div class="card writing-card"><div class="hr"><h2>주제 ${i+1}</h2><button class="chip" onclick="removeRoadEntry('${selected.id}',${i})">삭제</button></div><div class="f"><label>내가 선정한 주제</label><input id="entryTitle${i}" value="${esc(e.title)}" placeholder="예: 서비스 기획 포트폴리오"></div><div class="f"><label>이 주제에 대해 내가 작성한 내용</label><textarea id="entryBody${i}" rows="5" placeholder="무엇을 준비할지, 어떤 자료를 참고할지, 어떤 결과물을 만들지 직접 작성하세요.">${esc(e.body)}</textarea></div><div class="f"><label>참고한 자료 또는 정보 출처 (선택)</label><input id="entrySource${i}" value="${esc(e.source||'')}" placeholder="공식 사이트, 채용공고, 강의 자료 링크 등"></div><button class="btn feedback-btn" onclick="reviewEntry('${selected.id}',${i})">${I('spark')} 작성 내용 피드백 받기</button>${e.feedback?`<div class="feedback-box"><b>${I('spark')} 내용 기반 피드백</b><p>${esc(e.feedback).replace(/\n/g,'<br>')}</p></div>`:''}</div>`).join('')}
+${selected.entries.map((e,i)=>`<div class="card writing-card"><div class="hr"><h2>주제 ${i+1}</h2><button class="chip" onclick="removeRoadEntry('${selected.id}',${i})">삭제</button></div><div class="f"><label>내가 선정한 주제</label><input id="entryTitle${i}" onchange="syncEntry('${selected.id}',${i})" value="${esc(e.title)}" placeholder="예: 서비스 기획 포트폴리오"></div><div class="f"><label>이 주제에 대해 내가 작성한 내용</label><textarea id="entryBody${i}" onchange="syncEntry('${selected.id}',${i})" rows="5" placeholder="무엇을 준비할지, 어떤 자료를 참고할지, 어떤 결과물을 만들지 직접 작성하세요.">${esc(e.body)}</textarea></div><div class="f"><label>참고한 자료 또는 정보 출처 (선택)</label><input id="entrySource${i}" onchange="syncEntry('${selected.id}',${i})" value="${esc(e.source||'')}" placeholder="공식 사이트, 채용공고, 강의 자료 링크 등"></div><button class="btn feedback-btn" onclick="reviewEntry('${selected.id}',${i})">${I('spark')} 작성 내용 피드백 받기</button>${e.feedback?`<div class="feedback-box"><b>${I('spark')} 내용 기반 피드백</b><p>${esc(e.feedback).replace(/\n/g,'<br>')}</p></div>`:''}</div>`).join('')}
 <button class="btn ghost add-entry" onclick="addRoadEntry('${selected.id}')">＋ 준비 주제 추가하기</button>
 <div class="note">피드백은 작성한 문장의 구체성, 실행 가능성, 근거와 보완할 점을 중심으로 제공하는 프로토타입 예시입니다. 실제 생성형 AI 분석을 연결하려면 별도 API 연동이 필요합니다.</div>`;
   },
@@ -168,10 +168,10 @@ ${S.user ? `<div class="card acct"><span class="ic">${I('user')}</span><span cla
 function createRoadmap(){
  const name=document.getElementById('newRoadName').value.trim(),cat=document.getElementById('newRoadCat').value,goal=document.getElementById('newRoadGoal').value.trim();
  if(!name||!goal){alert('로드맵 이름과 목표 기업 또는 직무를 입력해 주세요.');return;}
- const id='r'+Date.now(); S.roadmaps.push({id,name,cat,goal,purpose:'',now:'',entries:[]});S.activeRoadmap=id;render();
+ const id='r'+Date.now(); S.roadmaps.push({id,name,cat,goal,purpose:'',now:'',entries:[]});S.activeRoadmap=id;syncRoadmap(id);render();
 }
-function addRoadEntry(id){const r=S.roadmaps.find(x=>x.id===id);if(r){r.entries.push({title:'',body:'',source:'',feedback:''});render();}}
-function saveRoadIntro(id){const r=S.roadmaps.find(x=>x.id===id);if(!r)return;r.purpose=document.getElementById('roadPurpose').value;r.now=document.getElementById('roadNow').value;render();}
+function addRoadEntry(id){const r=S.roadmaps.find(x=>x.id===id);if(r){r.entries.push({title:'',body:'',source:'',feedback:''});syncRoadmap(id);render();}}
+function saveRoadIntro(id){const r=S.roadmaps.find(x=>x.id===id);if(!r)return;r.purpose=document.getElementById('roadPurpose').value;r.now=document.getElementById('roadNow').value;syncRoadmap(id);render();}
 function readEntry(id,i){const r=S.roadmaps.find(x=>x.id===id),e=r&&r.entries[i];if(!e)return null;e.title=document.getElementById('entryTitle'+i).value;e.body=document.getElementById('entryBody'+i).value;e.source=document.getElementById('entrySource'+i).value;return e;}
 function reviewEntry(id,i){
  const e=readEntry(id,i);if(!e)return;const body=e.body.trim(),title=e.title.trim();
@@ -184,10 +184,11 @@ function reviewEntry(id,i){
  if(!/(목표|기준|이유|직무|기업|지원)/.test(body))points.push('이 주제가 목표 직무와 어떻게 연결되는지 설명을 보완하면 좋겠습니다.');
  if(!points.length)points.push('작성 내용에 목표와 실행 방향이 비교적 잘 드러납니다. 실제로 작성한 결과물이나 참고 자료를 추가하고, 본인의 역할과 판단 근거를 명시하면 완성도가 높아집니다.');
  e.feedback='검토 주제: '+title+'\n\n보완하면 좋은 점\n'+points.map((x,n)=>(n+1)+'. '+x).join('\n')+'\n\n수정 제안: 작성한 내용을 “목표 → 구체적인 실행 방법 → 결과물 → 확인 기준” 순서로 재구성해 보세요.';
+ syncRoadmap(id);
  render();
 }
-function removeRoadEntry(id,i){const r=S.roadmaps.find(x=>x.id===id);if(r){r.entries.splice(i,1);render();}}
-function deleteRoadmap(id){if(!confirm('이 로드맵을 삭제할까요?'))return;S.roadmaps=S.roadmaps.filter(x=>x.id!==id);S.activeRoadmap=null;render();}
+function removeRoadEntry(id,i){const r=S.roadmaps.find(x=>x.id===id);if(r){r.entries.splice(i,1);syncRoadmap(id);render();}}
+function deleteRoadmap(id){if(!confirm('이 로드맵을 삭제할까요?'))return;S.roadmaps=S.roadmaps.filter(x=>x.id!==id);S.activeRoadmap=null;deleteRoadmapSheet(id);render();}
 
 const stp = n => `<div class="steps">${['역량 입력', '기업 선택', '결과 확인'].map((t, i) => `<div class="${i + 1 === n ? 'on' : i + 1 < n ? 'dn' : ''}"><b>${i + 1 < n ? I('check') : i + 1}</b>${t}</div>`).join('')}</div>`;
 
@@ -369,14 +370,50 @@ function addCaseStep(rid, cid, si) {
   const r = S.roadmaps.find(x => x.id === rid), c = CASES.find(x => x.id === cid);
   if (!r || !c) return;
   r.entries.push({ title: c.steps[si].t, body: '', source: '', feedback: '' });
+  syncRoadmap(rid);
   const y = window.scrollY; render(); window.scrollTo(0, y);
 }
 function createFromCase(cid) {
   const c = CASES.find(x => x.id === cid), co = CO.find(z => z.id === c.co), id = 'r' + Date.now();
   S.roadmaps.push({ id, name: co.n + ' ' + co.j + ' 준비', cat: co.cat, goal: co.n + ' ' + co.j, purpose: '', now: '', entries: c.steps.map(s => ({ title: s.t, body: '', source: '', feedback: '' })) });
-  S.cmpMine = id; render();
+  S.cmpMine = id; syncRoadmap(id); render();
 }
 
+
+/* ===== 로드맵 구글 시트 연동 ===== */
+// 로드맵을 Apps Script 웹 앱(careerfit_roadmap 시트)으로 보냅니다. 실패해도 화면 동작에는 영향이 없습니다.
+const ROADMAP_URL = 'https://script.google.com/macros/s/AKfycbw4xRj3qYN-DaRtl7UED96UQwhO86cSNYL7tUj0k2tnEUBKmtFJk1PpWkw_3V4CU9jJjg/exec';
+const roadTimers = {};
+function postRoadmap(payload) {
+  try {
+    // text/plain 이어야 브라우저 사전 확인(CORS preflight) 없이 전송됩니다.
+    fetch(ROADMAP_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).catch(function () { });
+  } catch (e) { }
+}
+// 짧은 시간에 여러 번 바뀌어도 마지막 상태만 한 번 보냅니다(0.8초 대기).
+function syncRoadmap(id) {
+  clearTimeout(roadTimers[id]);
+  roadTimers[id] = setTimeout(function () {
+    delete roadTimers[id];
+    const r = (S.roadmaps || []).find(x => x.id === id);
+    if (!r) return;
+    postRoadmap({
+      action: 'save',
+      email: S.user || '',
+      roadmap: { id: r.id, name: r.name, cat: r.cat, goal: r.goal, purpose: r.purpose, now: r.now, entries: r.entries }
+    });
+  }, 800);
+}
+function deleteRoadmapSheet(id) {
+  clearTimeout(roadTimers[id]); delete roadTimers[id];
+  postRoadmap({ action: 'delete', id: id });
+}
+// 주제 입력칸에서 포커스가 벗어날 때(내용이 바뀐 경우) 입력값을 저장하고 시트에도 반영합니다.
+function syncEntry(id, i) { readEntry(id, i); syncRoadmap(id); }
 
 /* ===== 로그인 · 찜 ===== */
 // 프로토타입용: 실제 인증 없이 입력한 이메일로 로그인된 것처럼 동작하고, 상태는 이 브라우저에만 저장됩니다.
@@ -389,6 +426,20 @@ function readFavs(u) { try { const a = JSON.parse(ls.get('cf_favs_' + u) || '[]'
 function saveFavs() { if (S.user) ls.set('cf_favs_' + S.user, JSON.stringify(S.favs)); }
 function restoreUser() { const u = ls.get('cf_user'); if (u) { S.user = u; S.favs = readFavs(u); } }
 
+// 구글 시트(Apps Script 웹 앱) 연동: 로그인한 이메일만 기록합니다. 비밀번호는 보내지 않습니다.
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxGASixm1uMwxHKxF01exjtNqjP7ycwJ2YanMu7uoPDSPwvNN2sUGtLrmi2fxhRh56T/exec';
+function logLoginToSheet(email) {
+  try {
+    // text/plain 이어야 브라우저 사전 확인(CORS preflight) 없이 전송됩니다.
+    fetch(SHEET_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify({ email: email }),
+      keepalive: true
+    }).catch(function () { /* 시트 기록에 실패해도 로그인은 그대로 진행 */ });
+  } catch (e) { }
+}
+
 function goLogin() { if (S.s !== 'login') S.after = S.s; go('login'); }
 function goAuth(t) { if (S.user) go(t); else { S.after = t; go('login'); } }
 function cancelLogin() { const t = S.after || 'home'; S.after = null; S.pendingFav = null; go(t); }
@@ -397,6 +448,7 @@ function doLogin() {
   if (!/^\S+@\S+\.\S+$/.test(e)) { er.textContent = '이메일 형식을 확인해 주세요.'; return; }
   if (!p) { er.textContent = '비밀번호를 입력해 주세요.'; return; }
   S.user = e; ls.set('cf_user', e); S.favs = readFavs(e);
+  logLoginToSheet(e);
   if (S.pendingFav) { if (!S.favs.includes(S.pendingFav)) S.favs.push(S.pendingFav); S.pendingFav = null; saveFavs(); }
   const t = S.after || 'mypage'; S.after = null; go(t);
 }
@@ -416,7 +468,7 @@ function loginView() {
 <div class="f"><label for="lgP">비밀번호</label><input id="lgP" type="password" autocomplete="current-password" placeholder="비밀번호 입력"></div>
 <div class="err" id="lgEr" role="alert"></div>
 <div class="two"><button class="btn ghost" onclick="cancelLogin()">취소</button><button class="btn" onclick="doLogin()">로그인</button></div></div>
-<div class="note">프로토타입이라 실제 인증은 없어요. 이메일 형식에 맞게 입력하고 비밀번호를 아무거나 넣으면 로그인돼요. 찜 목록은 이 브라우저에만 저장돼요.</div>`;
+<div class="note">프로토타입이라 실제 인증은 없어요. 이메일 형식에 맞게 입력하고 비밀번호를 아무거나 넣으면 로그인돼요. 찜 목록은 이 브라우저에만 저장되고, 이메일은 로그인 기록용으로 구글 시트에 저장돼요. 비밀번호는 저장하지 않아요.</div>`;
 }
 function savedView() {
   if (!S.user) return loginView();
